@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Emotion Detector</h1>
+        <p>Enter a statement below to analyze its emotional content:</p>
+        
+        <textarea id="textToAnalyze" rows="4" placeholder="Type something here..."></textarea>
+        <br>
+        <button onclick="RunForcast()">Run Emotion Analysis</button>
+        
+        <div id="system_response"></div>
+    </div>
+
+    <!-- Link to the frontend JavaScript script -->
+    <script src="{{ url_for('static', filename='mywebscript.js') }}"></script>
+</body>
+</html>
