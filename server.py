@@ -7,8 +7,7 @@ app = Flask("Emotion Detector")
 @app.route("/emotionDetector")
 def sent_detector():
     """
-    Analyzes the text passed via query parameters and returns 
-    the formatted emotion detection results.
+    Analyzes the text passed via query parameters and handles blank input errors.
     """
     # Retrieve the text to analyze from the request arguments
     text_to_analyze = request.args.get('textToAnalyze')
@@ -16,7 +15,7 @@ def sent_detector():
     # Pass the text to the emotion_detector function
     response = emotion_detector(text_to_analyze)
     
-    # Optional edge-case handling for blank/invalid text inputs
+    # Check if the dominant emotion is None (indicating a blank or invalid input)
     if response['dominant_emotion'] is None:
         return "Invalid text! Please try again!"
         

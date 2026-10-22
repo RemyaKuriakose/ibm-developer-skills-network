@@ -3,8 +3,8 @@ import json
 
 def emotion_detector(text_to_analyze):
     """
-    Analyzes the text for emotions using the Watson NLP Library,
-    extracts specific emotion scores, and identifies the dominant emotion.
+    Analyzes text for emotions using the Watson NLP Library.
+    Handles blank inputs or status code 400 by returning a dictionary with None values.
     """
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
     header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
@@ -13,11 +13,21 @@ def emotion_detector(text_to_analyze):
     # Send a POST request to the API
     response = requests.post(url, json=input_json, headers=header)
     
+    # Check if the status code is 400 (bad request / blank input)
+    if response.status_code == 400:
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+    
     # Convert the response text into a dictionary using the json library
     formatted_response = json.loads(response.text)
     
     # Extract emotions and scores from the response structure
-    # (Depending on the exact API response layout, scores are typically under emotion predictions)
     emotions = formatted_response['emotionPredictions'][0]['emotion']
     
     anger_score = emotions.get('anger', 0.0)
